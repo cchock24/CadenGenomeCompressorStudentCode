@@ -27,7 +27,9 @@ public class GenomeCompressor {
         // TODO: complete the compress() method
         String s = BinaryStdIn.readString();
         int n = s.length();
+        // Number chars;
         for (int i = 0; i < n; i++) {
+            BinaryStdOut.write(n);
             BinaryStdOut.write(s.charAt(i), BITS_PER_CHAR);
         }
         BinaryStdOut.close();
@@ -38,7 +40,8 @@ public class GenomeCompressor {
      */
     public static void expand() {
         // TODO: complete the expand() method
-        while (!BinaryStdIn.isEmpty()) {
+        int buffer = BinaryStdIn.readInt();
+        for(int i = 0; i < buffer; i++){
             char c = BinaryStdIn.readChar(BITS_PER_CHAR);
             BinaryStdOut.write(c);
         }
