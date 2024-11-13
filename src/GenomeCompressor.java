@@ -18,7 +18,11 @@
  *  @author Zach Blick
  */
 public class GenomeCompressor {
-    public static final int BITS_PER_CHAR = 7;
+    public static final int BITS_PER_CHAR = 2;
+    final static int A = 0b00;
+    final static int G = 0b01;
+    final static int T = 0b10;
+    final static int C = 0b11;
     /**
      * Reads a sequence of 8-bit extended ASCII characters over the alphabet
      * { A, C, T, G } from standard input; compresses and writes the results to standard output.
@@ -28,9 +32,23 @@ public class GenomeCompressor {
         String s = BinaryStdIn.readString();
         int n = s.length();
         // Number chars;
+        BinaryStdOut.write(n);
+        // Add in Chars
         for (int i = 0; i < n; i++) {
-            BinaryStdOut.write(n);
-            BinaryStdOut.write(s.charAt(i), BITS_PER_CHAR);
+            switch(s.charAt(i)){
+                case 'A':
+                    BinaryStdOut.write(A, BITS_PER_CHAR);
+                    break;
+                case 'G':
+                    BinaryStdOut.write(G, BITS_PER_CHAR);
+                    break;
+                case 'T':
+                    BinaryStdOut.write(T, BITS_PER_CHAR);
+                    break;
+                case 'C':
+                    BinaryStdOut.write(C, BITS_PER_CHAR);
+                    break;
+            }
         }
         BinaryStdOut.close();
     }
@@ -42,8 +60,22 @@ public class GenomeCompressor {
         // TODO: complete the expand() method
         int buffer = BinaryStdIn.readInt();
         for(int i = 0; i < buffer; i++){
-            char c = BinaryStdIn.readChar(BITS_PER_CHAR);
-            BinaryStdOut.write(c);
+            int x = BinaryStdIn.readInt(BITS_PER_CHAR);
+            // Gets binary converts back into char
+            switch(x){
+                case 0b00:
+                    BinaryStdOut.write('A');
+                    break;
+                case 0b01:
+                    BinaryStdOut.write('G');
+                    break;
+                case 0b10:
+                    BinaryStdOut.write('T');
+                    break;
+                case 0b11:
+                    BinaryStdOut.write('C');
+                    break;
+            }
         }
         BinaryStdOut.close();
     }
