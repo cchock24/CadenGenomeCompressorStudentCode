@@ -18,15 +18,18 @@
  *  @author Zach Blick
  */
 public class GenomeCompressor {
-
+    public static final int BITS_PER_CHAR = 7;
     /**
      * Reads a sequence of 8-bit extended ASCII characters over the alphabet
      * { A, C, T, G } from standard input; compresses and writes the results to standard output.
      */
     public static void compress() {
-
         // TODO: complete the compress() method
-
+        String s = BinaryStdIn.readString();
+        int n = s.length();
+        for (int i = 0; i < n; i++) {
+            BinaryStdOut.write(s.charAt(i), BITS_PER_CHAR);
+        }
         BinaryStdOut.close();
     }
 
@@ -34,9 +37,11 @@ public class GenomeCompressor {
      * Reads a binary sequence from standard input; expands and writes the results to standard output.
      */
     public static void expand() {
-
         // TODO: complete the expand() method
-
+        while (!BinaryStdIn.isEmpty()) {
+            char c = BinaryStdIn.readChar(BITS_PER_CHAR);
+            BinaryStdOut.write(c);
+        }
         BinaryStdOut.close();
     }
 
@@ -48,7 +53,6 @@ public class GenomeCompressor {
      * @param args the command-line arguments
      */
     public static void main(String[] args) {
-
         if      (args[0].equals("-")) compress();
         else if (args[0].equals("+")) expand();
         else throw new IllegalArgumentException("Illegal command line argument");
